@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">sample</string>
+
+    <string name="main_btn1">小米天气</string>
+    <string name="main_btn2">倒计时动画</string>
+    <string name="main_btn3">加载图片</string>
+    <string name="main_btn4">长按取词</string>
+</resources>
