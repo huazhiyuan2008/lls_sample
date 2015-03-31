@@ -1,11 +1,9 @@
 package com.lls.sample.ui;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import com.lls.library.util.UIUtil;
 import com.lls.sample.R;
 import com.lls.sample.base.BaseActivity;
 
@@ -35,23 +33,28 @@ public class ImageActivity extends BaseActivity {
         mImageView2.setImageResource(R.drawable.pic2);
         mImageView3.setImageResource(R.drawable.pic3);
 
-        new Handler().postDelayed(new Runnable() {
+        fitImage(mImageView1);
+        fitImage(mImageView2);
+        fitImage(mImageView3);
+    }
+
+    private void fitImage(final ImageView imageView) {
+        imageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void run() {
-
-                int maxHeight = UIUtil.dip2px(ImageActivity.this, 2300);
-
-                int height = (int) ((float) mImageView2.getWidth() / mImageView2.getDrawable().getMinimumWidth() * mImageView2.getDrawable().getMinimumHeight());
-                if (height > maxHeight) {
-                    height = maxHeight;
+            public void onGlobalLayout() {
+                if (imageView.getDrawable() == null) {
+                    return;
                 }
 
-                ViewGroup.LayoutParams params = mImageView2.getLayoutParams();
-                params.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                int height = imageView.getWidth() * imageView.getDrawable().getMinimumHeight() / imageView.getDrawable().getMinimumWidth();
+
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
                 params.height = height;
 
-                mImageView2.setLayoutParams(params);
+                if (height != imageView.getHeight()) {
+                    imageView.setLayoutParams(params);
+                }
             }
-        }, 200);
+        });
     }
 }

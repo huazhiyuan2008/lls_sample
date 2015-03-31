@@ -7,6 +7,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -139,12 +141,23 @@ public class CircleView extends View {
         animatorSet.playTogether(animatorList);
     }
 
+    private Handler mAnimHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 3) {
+
+            }
+        }
+    };
+
+    private void initAnim2() {
+
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (isInEditMode()) {
-            return;
-        }
 
         canvas.save();
         canvas.translate(getWidth() / 2, getHeight() / 2);
